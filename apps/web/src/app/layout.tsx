@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { poppins, mochiyPopOne } from "@/utils/fonts";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Event-Ally | event community",
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${mochiyPopOne.variable}`}>
+        <Navbar />
         {children}
       </body>
     </html>
