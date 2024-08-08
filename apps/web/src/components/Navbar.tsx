@@ -34,6 +34,26 @@ const Navbar = () => {
               priority
             />
           </Link>
+          <div className="mx-3 mt-1 flex justify-center text-center text-lg font-bold text-slate-800 lg:flex-grow">
+            <Link
+              href="#"
+              className="underline-animation-nav mr-12 mt-4 min-w-28 rounded-md border-t-4 border-pink-500 px-5 py-3 tracking-wider lg:mt-0 lg:inline-block"
+            >
+              Events
+            </Link>
+            <Link
+              href="#"
+              className="underline-animation-nav mr-12 mt-4 min-w-28 rounded-md border-t-4 border-pink-500 px-5 py-3 tracking-wider lg:mt-0 lg:inline-block"
+            >
+              About
+            </Link>
+            <Link
+              href="#"
+              className="underline-animation-nav mr-12 mt-4 min-w-28 rounded-md border-t-4 border-pink-500 px-5 py-3 tracking-wider lg:mt-0 lg:inline-block"
+            >
+              FAQ
+            </Link>
+          </div>
           <ShimmerButton
             className={`bg-white shadow-2xl ${
               pathname === "/" ? "hidden" : ""
@@ -41,7 +61,7 @@ const Navbar = () => {
             onClick={handleClick}
           >
             <span
-              className={`md:text-md whitespace-pre-wrap text-sm font-extrabold italic tracking-widest lg:text-lg`}
+              className={`md:text-md whitespace-pre-wrap text-sm font-bold italic tracking-widest lg:text-lg`}
             >
               Get Tickets
             </span>

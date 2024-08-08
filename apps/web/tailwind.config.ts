@@ -70,7 +70,61 @@ const config: Config = {
       },
     },
   },
-  plugins: [addVariablesForColors],
+  plugins: [
+    addVariablesForColors,
+    function ({ addComponents }: any) {
+      addComponents({
+        ".underline-animation-nav": {
+          position: "relative",
+          display: "block",
+          paddingBottom: "0.5rem",
+          fontWeight: "700",
+          "&::after": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            height: "3px",
+            width: "100%",
+            backgroundColor: "#DB2777",
+            transform: "scaleX(0)",
+            transformOrigin: "center",
+            transition: "transform 300ms ease-in-out",
+            borderRadius: "50px",
+          },
+          "&:hover::after": {
+            transform: "scaleX(1)",
+            transformOrigin: "left right",
+          },
+        },
+        ".underline-animation-link": {
+          position: "relative",
+          display: "block",
+          paddingBottom: "0.4rem",
+          fontWeight: "700",
+          "&::after": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            height: "4px",
+            width: "100%",
+            backgroundColor: " #FFFFFFBF",
+            transform: "scaleX(0)",
+            transformOrigin: "center",
+            transition: "transform 300ms ease-in-out",
+            borderRadius: "50px",
+          },
+          "&:hover::after": {
+            transform: "scaleX(1)",
+            transformOrigin: "left right",
+          },
+        },
+      });
+    },
+  ],
 };
 
 function addVariablesForColors({ addBase, theme }: any) {

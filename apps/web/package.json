@@ -12,7 +12,9 @@
     "npx": "npx"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.1.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tabler/icons-react": "^3.11.0",
     "axios": "^1.7.3",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
