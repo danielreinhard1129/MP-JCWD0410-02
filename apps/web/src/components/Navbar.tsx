@@ -34,7 +34,7 @@ const Navbar = () => {
               priority
             />
           </Link>
-          <div className="mx-3 mt-1 flex justify-center text-center text-lg font-bold text-slate-800 lg:flex-grow">
+          <div className="mx-3 mt-1 flex justify-center text-center text-lg font-bold text-slate-900 lg:flex-grow">
             <Link
               href="#"
               className="underline-animation-nav mr-12 mt-4 min-w-28 rounded-md border-t-4 border-pink-500 px-5 py-3 tracking-wider lg:mt-0 lg:inline-block"

@@ -9,6 +9,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/features/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -111,10 +112,10 @@ const config: Config = {
             left: 0,
             height: "4px",
             width: "100%",
-            backgroundColor: " #FFFFFFBF",
+            backgroundColor: "#60A5FA",
             transform: "scaleX(0)",
             transformOrigin: "center",
-            transition: "transform 300ms ease-in-out",
+            transition: "transform 200ms ease-in-out",
             borderRadius: "50px",
           },
           "&:hover::after": {
