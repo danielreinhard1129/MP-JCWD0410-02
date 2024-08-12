@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BottomGradient from "../components/bottomGradient";
 import LabelInputContainer from "../components/labelInputContainer";
-import Background from "/public/astronaut-Background.svg";
+import Background from "/public/astronaut-background.svg";
 import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
 import { LoginSchema } from "./schemas/LoginSchema";
@@ -75,7 +75,9 @@ const LoginPage = () => {
               onBlur={formik.handleBlur}
             />
             {!!formik.touched.email && !!formik.errors.email ? (
-              <p className="ml-1 text-sm text-red-400">{formik.errors.email}</p>
+              <p className="ml-2 text-sm font-bold tracking-wide text-pink-300">
+                {formik.errors.email}
+              </p>
             ) : null}
           </LabelInputContainer>
 
@@ -92,7 +94,7 @@ const LoginPage = () => {
               onBlur={formik.handleBlur}
             />
             {!!formik.touched.password && !!formik.errors.password ? (
-              <p className="ml-1 text-sm text-red-400">
+              <p className="ml-[6px] text-sm font-bold tracking-wide text-pink-300">
                 {formik.errors.password}
               </p>
             ) : null}
@@ -104,9 +106,18 @@ const LoginPage = () => {
             className="group/btn dark:to-slate-from-slate-950 to-slate-from-slate-950 relative block h-10 w-full rounded-md bg-gradient-to-br from-slate-950 font-medium text-neutral-200 shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-slate-900 dark:from-slate-950 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
           >
-            Sign In &rarr;
+            Log In &rarr;
             <BottomGradient />
           </button>
+
+          <label className="mb-3 mr-1 mt-2 flex justify-end">
+            <Link
+              className="ml-2 text-sm font-bold tracking-wide text-pink-200 transition-colors duration-300 hover:text-pink-200/70"
+              href="/forgot-password"
+            >
+              Forgot password ?
+            </Link>
+          </label>
 
           <p className="mt-4 flex justify-center font-semibold antialiased">
             <Label
@@ -116,10 +127,10 @@ const LoginPage = () => {
               Don't have an account ?
             </Label>
             <Link
-              className="underline-animation-link ml-2 text-sm font-bold tracking-wide text-blue-400"
+              className="underline-animation-link ml-2 text-sm font-bold tracking-wide text-pink-200"
               href="/register"
             >
-              Sign Up
+              Register
             </Link>
           </p>
 
