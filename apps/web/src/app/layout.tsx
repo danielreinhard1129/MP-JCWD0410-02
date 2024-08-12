@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${mochiyPopOne.variable}`}>
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col selection:bg-[#d80072] selection:font-bold selection:text-white">
           <Navbar />
           <main className="flex-grow">{children}</main>
           <Footer />

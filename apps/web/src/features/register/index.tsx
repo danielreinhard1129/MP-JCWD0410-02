@@ -11,7 +11,7 @@ import Link from "next/link";
 import BottomGradient from "../components/bottomGradient";
 import LabelInputContainer from "../components/labelInputContainer";
 import { RegisterSchema } from "./schemas/RegisterSchema";
-import Background from "/public/astronaut-Background.svg";
+import Background from "/public/astronaut-background.svg";
 import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
 
@@ -122,7 +122,7 @@ const RegisterPage = () => {
             className="group/btn dark:to-slate-from-slate-950 to-slate-from-slate-950 relative block h-10 w-full rounded-md bg-gradient-to-br from-slate-950 font-medium text-neutral-200 shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-slate-900 dark:from-slate-950 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
           >
-            Sign up &rarr;
+            Register &rarr;
             <BottomGradient />
           </button>
 
@@ -134,10 +134,10 @@ const RegisterPage = () => {
               Already have an account ?
             </Label>
             <Link
-              className="underline-animation-link ml-2 text-sm font-bold tracking-wide text-blue-400"
+              className="underline-animation-link ml-2 text-sm font-bold tracking-wide text-pink-200"
               href="/login"
             >
-              Sign In
+              Log In
             </Link>
           </p>
 

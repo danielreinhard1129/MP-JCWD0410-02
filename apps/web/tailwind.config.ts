@@ -112,10 +112,10 @@ const config: Config = {
             left: 0,
             height: "4px",
             width: "100%",
-            backgroundColor: "#60A5FA",
+            backgroundColor: "#fbcfe8",
             transform: "scaleX(0)",
             transformOrigin: "center",
-            transition: "transform 200ms ease-in-out",
+            transition: "transform 250ms ease-in-out",
             borderRadius: "50px",
           },
           "&:hover::after": {
