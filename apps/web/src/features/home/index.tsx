@@ -44,7 +44,7 @@ const HomePage = () => {
             <div className="mt-10 flex flex-col items-center justify-center gap-y-9">
               <ShimmerButton
                 onClick={handClick}
-                className="bg-white shadow-2xl sm:hidden"
+                className="bg-white shadow-2xl lg:hidden"
               >
                 <span className="md:text-md whitespace-pre-wrap text-sm font-extrabold italic tracking-widest lg:text-lg">
                   Get Tickets
