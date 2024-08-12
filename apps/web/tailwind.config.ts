@@ -88,10 +88,10 @@ const config: Config = {
             left: 0,
             height: "3px",
             width: "100%",
-            backgroundColor: "#DB2777",
+            backgroundColor: "#f472b6",
             transform: "scaleX(0)",
             transformOrigin: "center",
-            transition: "transform 300ms ease-in-out",
+            transition: "transform 350ms ease-in-out",
             borderRadius: "50px",
           },
           "&:hover::after": {
