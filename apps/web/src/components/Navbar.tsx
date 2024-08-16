@@ -33,14 +33,16 @@ const Navbar = () => {
   };
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header
+      className={`sticky inset-x-0 top-0 z-50 bg-[#070f26] ${pathname === "/" ? "absolute h-0 bg-[#fff]" : ""}`}
+    >
       <nav
-        className={`flex items-center justify-between px-4 pt-2 sm:p-6 lg:px-4 ${pathname === "/" ? "lg:px-8 2xl:px-14" : ""}`}
+        className={`flex items-center justify-between px-4 pb-6 sm:p-6 md:pb-10 lg:px-4 lg:pb-0 lg:pt-7 ${pathname === "/" ? "pt-6 md:pt-12 lg:px-8 lg:pt-24 2xl:px-14" : ""} lg:h-28`}
       >
-        <div className="relative flex w-full flex-col items-center justify-between px-0 py-3 max-lg:pb-11 sm:px-8 lg:flex-1 lg:flex-row lg:justify-around">
+        <div className="relative flex w-full flex-col items-center justify-between px-0 py-3 max-lg:pb-11 sm:px-8 lg:flex-1 lg:flex-row lg:justify-around lg:pb-0">
           <Link
             href="/"
-            className="absolute left-0 cursor-pointer lg:left-1 lg:top-5"
+            className="absolute left-0 cursor-pointer lg:left-1 lg:top-4"
           >
             <Image
               className="h-auto w-60"
@@ -55,7 +57,7 @@ const Navbar = () => {
             className={`mx-auto mt-20 flex-col justify-center gap-y-9 text-center text-lg font-bold text-slate-900 lg:mt-28 lg:bg-none dark:text-white/75 ${isOpen ? "flex" : "hidden"} ${isAnimating ? "animate-fade" : ""} lg:flex`}
           >
             <div
-              className={`flex flex-col font-bold text-pink-500 lg:-mt-36 lg:ml-16 lg:flex-row lg:justify-center lg:px-4 ${pathname === "/" ? "hidden" : ""}`}
+              className={`flex flex-col font-bold text-white lg:-mt-36 lg:ml-16 lg:flex-row lg:justify-center lg:px-4 ${pathname === "/" ? "hidden" : ""}`}
             >
               <Link
                 href="/events"
@@ -78,7 +80,7 @@ const Navbar = () => {
             </div>
           </div>
           <ShimmerButton
-            className={`ml-[1px] hidden w-full ${isOpen ? "flex" : "hidden"} bg-white shadow-2xl lg:absolute lg:right-1 lg:top-[14px] lg:max-w-44 ${
+            className={`ml-[1px] hidden w-full ${isOpen ? "flex" : "hidden"} bg-white shadow-2xl lg:absolute lg:right-1 lg:top-4 lg:max-w-44 ${
               pathname === "/" ? "hidden" : ""
             } lg:flex`}
             onClick={handleClick}
