@@ -18,7 +18,7 @@ const Footer = () => {
     return null;
   }
   return (
-    <footer className="absolute bottom-0 w-full bg-white dark:bg-gray-900">
+    <footer className="w-full bg-gray-900">
       <div className="container mx-auto flex flex-col items-center justify-between space-y-4 p-4 max-md:gap-y-1 sm:flex-row sm:space-y-0 md:px-7 lg:px-14 2xl:px-20">
         <Link href="#">
           <Image
