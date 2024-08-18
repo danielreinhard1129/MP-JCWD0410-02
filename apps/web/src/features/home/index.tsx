@@ -4,8 +4,10 @@ import Image from "next/image";
 import rocket from "/public/rocket.svg";
 import PulsatingButton from "@/components/magicui/pulsatingButton";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const HomePage = () => {
+  const session = useSession({ required: true});
   const router = useRouter();
   const handClick = () => {
     router.push("/login");
