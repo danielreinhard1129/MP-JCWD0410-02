@@ -12,9 +12,9 @@ export class SampleRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/', this.sampleController.getSampleData);
-    this.router.get('/:id', this.sampleController.getSampleDataById);
-    this.router.post('/', this.sampleController.createSampleData);
+    this.router.get('/', (req, res) => this.sampleController.getSampleDataById);
+    this.router.get('/:id', (req, res) => this.sampleController.getSampleDataById);
+    this.router.post('/', (req, res) => this.sampleController.createSampleData);
   }
 
   getRouter(): Router {

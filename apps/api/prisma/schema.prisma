@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,12 +7,136 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum ROLE {
+  CUSTOMER
+  EVENT_ORGANIZER
+}
 
-  @@map("samples") // if you want to use snake_case format
+enum Provider {
+  CREDENTIALS
+  GOOGLE
+  GITHUB
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String        @unique
+  password      String?
+  provider      Provider      @default(CREDENTIALS)
+  emailVerified Boolean       @default(false)
+  image         String?
+  token         String?       @unique
+  role          ROLE          @default(CUSTOMER)
+  referralCode  String?       @unique
+  points        Int           @default(0)
+  coupons       Coupon[]
+  transactions  Transaction[]
+  events        Event[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  Attendee      Attendee[]
+  Referral      Referral[]
+  samples       Sample[]
+
+  @@map("users")
+}
+
+model Event {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  startDate    DateTime
+  endDate      DateTime
+  organizer    User          @relation(fields: [organizerId], references: [id])
+  organizerId  Int
+  vouchers     Voucher[]
+  transactions Transaction[]
+  attendees    Attendee[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+
+  @@map("events")
+}
+
+model Voucher {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  discount  Int
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("vouchers")
+}
+
+model Coupon {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  discount  Int
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("coupons")
+}
+
+model Transaction {
+  id           Int               @id @default(autoincrement())
+  userId       Int
+  user         User              @relation(fields: [userId], references: [id])
+  eventId      Int
+  event        Event             @relation(fields: [eventId], references: [id])
+  paymentProof String?
+  status       TransactionStatus @default(PENDING)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now())
+
+  @@map("transactions")
+}
+
+model Attendee {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id])
+  eventId        Int
+  event          Event    @relation(fields: [eventId], references: [id])
+  ticketQuantity Int
+  totalPrice     Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+
+  @@map("attendees")
+}
+
+model Referral {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  referralCode String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+
+  @@map("referrals")
+}
+
+enum TransactionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Sample {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@map("samples")
 }

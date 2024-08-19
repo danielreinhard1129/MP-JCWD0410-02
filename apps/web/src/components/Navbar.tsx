@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import ShimmerButton from "./magicui/shimmerButton";
 import Logo from "/public/event-ally.svg";
 
@@ -12,6 +13,7 @@ const Navbar = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const session = useSession();
 
   const isAuthPage = pathname === "/login" || pathname === "/register";
 
@@ -65,6 +67,8 @@ const Navbar = () => {
               >
                 Events
               </Link>
+
+              
               <Link
                 href="/about"
                 className="mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:underline-animation-nav lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"

@@ -14,12 +14,21 @@ import { RegisterSchema } from "./schemas/RegisterSchema";
 import Background from "/public/astronaut-background.svg";
 import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 const RegisterPage = () => {
   const router = useRouter();
-  const handleClick = () => {
-    router.replace("/login");
-  };
+  const { data: session, status } = useSession();
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const registered = urlParams.get('registered');
+    if (registered === 'true') {
+      setSuccessMessage('Registration successful. Please log in.');
+    }
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -28,8 +37,46 @@ const RegisterPage = () => {
       password: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      try {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (response.ok) {
+          // Registration successful, redirect to login
+          router.push("/login");
+        } else {
+          const data = await response.json();
+          setError(data.message || "Registration failed");
+        }
+      } catch (error) {
+        setError("An error occurred during registration");
+        console.error("Registration error:", error);
+      }
+    },
   });
+
+  const handleSocialLogin = async (provider: string) => {
+    try {
+      await signIn(provider, { callbackUrl: "/dashboard" });
+    } catch (error) {
+      setError(`Failed to login with ${provider}`);
+      console.error(`${provider} login error:`, error);
+    }
+  };
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (session) {
+    return null;
+  }
 
   return (
     <main className="relative z-10 flex h-screen items-center justify-center overflow-hidden">
@@ -117,8 +164,9 @@ const RegisterPage = () => {
             ) : null}
           </LabelInputContainer>
 
+          {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
+
           <button
-            onClick={handleClick}
             className="group/btn dark:to-slate-from-slate-950 to-slate-from-slate-950 relative block h-10 w-full rounded-md bg-gradient-to-br from-slate-950 font-medium text-neutral-200 shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-slate-900 dark:from-slate-950 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
           >
@@ -146,7 +194,8 @@ const RegisterPage = () => {
           <div className="flex flex-col space-y-4">
             <button
               className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-slate-900 px-4 font-medium text-black shadow-input dark:bg-slate-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit"
+              type="button"
+              onClick={() => handleSocialLogin("github")}
             >
               <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -156,7 +205,8 @@ const RegisterPage = () => {
             </button>
             <button
               className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-slate-900 px-4 font-medium text-black shadow-input dark:bg-slate-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit"
+              type="button"
+              onClick={() => handleSocialLogin("google")}
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -176,3 +226,7 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+function setSuccessMessage(arg0: string) {
+  throw new Error("Function not implemented.");
+}
