@@ -18,7 +18,7 @@ const useAxios = () => {
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
 
     const responseIntercept = axiosInstance.interceptors.response.use(
@@ -28,7 +28,7 @@ const useAxios = () => {
           signOut();
         }
         return Promise.reject(err);
-      }
+      },
     );
 
     return () => {
