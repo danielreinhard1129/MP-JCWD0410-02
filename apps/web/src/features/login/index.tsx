@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShootingStars } from "@/components/ui/shootingStars";
@@ -14,24 +15,63 @@ import Background from "/public/astronaut-background.svg";
 import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
 import { LoginSchema } from "./schemas/LoginSchema";
+import { useSession, signIn } from "next-auth/react";
 
 const LoginPage = () => {
   const router = useRouter();
-  const handleClick = () => {
-    router.replace("/dashboard");
-  };
+  const { data: session, status } = useSession();
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (session) {
+      router.replace("/dashboard");
+    }
+  }, [session, router]);
 
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
     },
     validationSchema: LoginSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      try {
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: values.email,
+          password: values.password,
+        });
+
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        setError("An error occurred during login");
+        console.error("Login error:", error);
+      }
+    },
   });
 
+  const handleSocialLogin = async (provider: string) => {
+    try {
+      await signIn(provider, { callbackUrl: "/dashboard" });
+    } catch (error) {
+      setError(`Failed to login with ${provider}`);
+      console.error(`${provider} login error:`, error);
+    }
+  };
+
   const isPasswordValid = formik.values.password.length > 6;
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (session) {
+    return null;
+  }
 
   return (
     <main className="relative z-10 flex h-screen items-center justify-center overflow-hidden">
@@ -100,8 +140,9 @@ const LoginPage = () => {
             ) : null}
           </LabelInputContainer>
 
+          {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
+
           <button
-            onClick={handleClick}
             disabled={!isPasswordValid}
             className="group/btn dark:to-slate-from-slate-950 to-slate-from-slate-950 relative block h-10 w-full rounded-md bg-gradient-to-br from-slate-950 font-medium text-neutral-200 shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-slate-900 dark:from-slate-950 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
@@ -139,7 +180,8 @@ const LoginPage = () => {
           <div className="flex flex-col space-y-4">
             <button
               className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-slate-900 px-4 font-medium text-black shadow-input dark:bg-slate-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit"
+              type="button"
+              onClick={() => handleSocialLogin("github")}
             >
               <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -149,7 +191,8 @@ const LoginPage = () => {
             </button>
             <button
               className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-slate-900 px-4 font-medium text-black shadow-input dark:bg-slate-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit"
+              type="button"
+              onClick={() => handleSocialLogin("google")}
             >
               <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-sm text-neutral-700 dark:text-neutral-300">

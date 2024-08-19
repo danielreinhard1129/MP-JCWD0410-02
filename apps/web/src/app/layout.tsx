@@ -3,6 +3,7 @@ import "./globals.css";
 import { poppins, mochiyPopOne } from "@/utils/fonts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "Event-Ally | event community",
@@ -19,9 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} ${mochiyPopOne.variable}`}>
         <div className="flex flex-col selection:bg-[#d80072] selection:font-bold selection:text-white">
-          <Navbar />
+        <NextAuthProvider>
+          <Navbar /> 
           <main className="flex-grow">{children}</main>
           <Footer />
+          </NextAuthProvider>
         </div>
       </body>
     </html>

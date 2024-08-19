@@ -12,6 +12,9 @@ import { PORT } from './config';
 import { SampleRouter } from './routers/sample.router';
 
 export default class App {
+  getApp(): express.Application {
+    throw new Error('Method not implemented.');
+  }
   private app: Express;
 
   constructor() {
