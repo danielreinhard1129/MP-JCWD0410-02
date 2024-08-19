@@ -1,7 +1,6 @@
-import { MdDateRange } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaRupiahSign } from "react-icons/fa6";
 import Image from "next/image";
+import { FaLocationDot, FaRupiahSign } from "react-icons/fa6";
+import { MdDateRange } from "react-icons/md";
 
 interface Product {
   id: number;
@@ -50,7 +49,7 @@ const products: Product[] = [
 const Card = () => {
   return (
     <section className="body-font text-gray-600">
-      <div className="container mx-auto px-5 py-7 lg:py-6">
+      <div className="container mx-auto px-9 py-7 lg:py-6 2xl:px-8">
         <div className="-m-4 flex flex-wrap">
           {products.map((product) => (
             <div key={product.id} className="w-full p-4 md:w-1/2 lg:w-1/4">

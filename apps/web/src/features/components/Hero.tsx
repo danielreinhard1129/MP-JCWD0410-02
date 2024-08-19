@@ -1,6 +1,11 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { InputSearchBar } from "./InputSearchBar";
 
 const Hero = () => {
+  const pathname = usePathname();
+
   return (
     <section>
       <div className="bg-[#070f26]">
@@ -14,7 +19,9 @@ const Hero = () => {
               Discover the Most happening events around you
             </p>
           </div>
-          <div className="flex w-11/12 md:w-8/12 xl:w-6/12">
+          <div
+            className={`flex w-11/12 md:w-8/12 xl:w-6/12 ${pathname === "/landingpage" ? "hidden" : ""}`}
+          >
             <InputSearchBar />
           </div>
         </div>

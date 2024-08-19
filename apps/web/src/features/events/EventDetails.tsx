@@ -8,10 +8,15 @@ import { IoMdArrowDropright } from "react-icons/io";
 import jogjaImageEvent from "/public/jogja-event1.webp";
 import Image from "next/image";
 import BuyTicket from "./components/BuyTicket";
+import { FC } from "react";
 
 interface Event {
   id: number;
   imgSrc: string;
+}
+
+interface EventDetailPageProps {
+  eventId: number;
 }
 
 const events: Event[] = [
@@ -33,7 +38,7 @@ const events: Event[] = [
   },
 ];
 
-const EventsDetailsPage = () => {
+const EventsDetailsPage: FC<EventDetailPageProps> = ({ eventId }) => {
   return (
     <>
       <div className="container mx-auto px-4 py-8 md:px-12 2xl:px-28">

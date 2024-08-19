@@ -1,5 +1,13 @@
+import Card from "../components/Card";
+import Hero from "../components/Hero";
+
 const EventsPage = () => {
-  return <div>EventsPage</div>;
+  return (
+    <>
+      <Hero />
+      <Card />
+    </>
+  );
 };
 
 export default EventsPage;
