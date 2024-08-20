@@ -16,17 +16,20 @@ import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
 import { LoginSchema } from "./schemas/LoginSchema";
 import { useSession, signIn } from "next-auth/react";
+import useLogin from "@/hooks/api/auth/useLogin";
+import { result } from "cypress/types/lodash";
 
 const LoginPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [error, setError] = useState("");
+  const loginMutation = useLogin();
 
-  useEffect(() => {
-    if (session) {
-      router.replace("/dashboard");
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.replace("/dashboard");
+  //   }
+  // }, [session, router]);
 
   const formik = useFormik({
     initialValues: {
@@ -35,24 +38,16 @@ const LoginPage = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      try {
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-        });
-
-        if (result?.error) {
-          setError(result.error);
-        } else {
-          router.push("/dashboard");
+      try {       
+        await loginMutation.mutateAsync(values);
+        } catch (error) {
+          setError("An error occured during login");
+          console.error("Login error:", error);
         }
-      } catch (error) {
-        setError("An error occurred during login");
-        console.error("Login error:", error);
-      }
-    },
-  });
+
+      },
+    });
+
 
   const handleSocialLogin = async (provider: string) => {
     try {
@@ -69,9 +64,6 @@ const LoginPage = () => {
     return <p>Loading...</p>;
   }
 
-  if (session) {
-    return null;
-  }
 
   return (
     <main className="relative z-10 flex h-screen items-center justify-center overflow-hidden">
@@ -212,3 +204,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+//middleware di adjust > protected route
+//di useLogin > router.push nya dibuat sesuai role nya (EO / client)
+// register tambah fitur referal

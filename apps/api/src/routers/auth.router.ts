@@ -13,8 +13,8 @@ export class AuthRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.post('/register', (req, res) => this.authController.register);
-    this.router.post('/login', (req, res) => this.authController.login);
+    this.router.post('/register', this.authController.register);
+    this.router.post('/login',  this.authController.login);
   }
 
   getRouter(): Router {

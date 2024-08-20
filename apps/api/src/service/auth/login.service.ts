@@ -18,7 +18,7 @@ export const loginService = async (body: Pick<User, 'email' | 'password'>) => {
       throw new Error('Invalid email address');
     }
 
-    const isPasswordValid = await comparePassword(password, user.password);
+    const isPasswordValid = await comparePassword(password!, user.password!);
     if (!isPasswordValid) {
       throw new Error('Incorrect password');
     }
