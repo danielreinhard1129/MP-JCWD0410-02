@@ -1,14 +1,16 @@
+// src/components/DashboardContent.tsx
 'use client';
+
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import Dashboard from '@/features/dashboard/Dashboard';
 import EventManagement from '@/features/dashboard/EventManagement';
 import TransactionManagement from '@/features/dashboard/TransactionManagement';
-import Statistics from '../features/dashboard/Statistic';
+import Statistics from '@/features/dashboard/Statistic';
 import AttendeeList from '@/features/dashboard/AttendeeList';
-import ProtectedRoute from '../components/ProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 
-export const DashboardContent = ()=>  {
+export const DashboardContent = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab'); 
 
@@ -28,10 +30,10 @@ export const DashboardContent = ()=>  {
   };
 
   return (
-    <ProtectedRoute allowedRoles={['organizer']}>
+    <div>
       {renderContent()}
-    </ProtectedRoute>
+    </div>
   );
 }
 
-export default DashboardContent
+export default DashboardContent;
