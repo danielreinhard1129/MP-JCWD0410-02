@@ -4,6 +4,8 @@ import { poppins, mochiyPopOne } from "@/utils/fonts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NextAuthProvider from "@/providers/NextAuthProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Event-Ally | event community",
@@ -21,9 +23,13 @@ export default function RootLayout({
       <body className={`${poppins.className} ${mochiyPopOne.variable}`}>
         <div className="flex min-h-screen flex-col selection:bg-[#d80072] selection:font-bold selection:text-white">
           <NextAuthProvider>
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
+            <SessionProvider>
+              <ReactQueryProvider>
+                <Navbar />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </ReactQueryProvider>
+            </SessionProvider>
           </NextAuthProvider>
         </div>
       </body>

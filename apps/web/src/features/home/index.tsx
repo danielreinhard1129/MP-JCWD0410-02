@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const HomePage = () => {
-  const session = useSession({ required: true});
   const router = useRouter();
   const handClick = () => {
     router.push("/login");
