@@ -5,13 +5,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const prisma = new PrismaClient();
 
 export class SampleController {
-  getSampleDataById(nextApiReq: NextApiRequest, res: Response<any, Record<string, any>>) {
+  getSampleDataById(
+    nextApiReq: NextApiRequest,
+    res: Response<any, Record<string, any>>,
+  ) {
     throw new Error('Method not implemented.');
   }
   async createSampleData(req: NextApiRequest, res: NextApiResponse) {
     const { name, description, userId } = req.body;
     const sample = await prisma.sample.create({
-      data: { name, description, userId: parseInt(userId) }
+      data: { name, description, userId: parseInt(userId) },
     });
     return res.json(sample);
   }
@@ -34,15 +37,15 @@ export class SampleController {
 
   async createEvent(req: NextApiRequest, res: NextApiResponse) {
     const { title, description, startDate, endDate, organizerId } = req.body;
-    const event = await prisma.event.create({
-      data: {
-        title,
-        description,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        organizerId: parseInt(organizerId)
-      }
-    });
+    // const event = await prisma.event.create({
+    //   data: {
+    //     title,
+    //     description,
+    //     startDate: new Date(startDate),
+    //     endDate: new Date(endDate),
+    //     organizerId: parseInt(organizerId)
+    //   }
+    // });
     return res.json(event);
   }
 
@@ -63,8 +66,8 @@ export class SampleController {
       data: {
         userId: parseInt(userId),
         eventId: parseInt(eventId),
-        paymentProof
-      }
+        paymentProof,
+      },
     });
     return res.json(transaction);
   }

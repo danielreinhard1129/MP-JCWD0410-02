@@ -15,7 +15,10 @@ const Navbar = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const session = useSession();
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/dashboard";
 
   if (isAuthPage) {
     return null;
@@ -68,7 +71,6 @@ const Navbar = () => {
                 Events
               </Link>
 
-              
               <Link
                 href="/about"
                 className="mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:underline-animation-nav lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"

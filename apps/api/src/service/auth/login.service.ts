@@ -8,7 +8,7 @@ export const loginService = async (body: Pick<User, 'email' | 'password'>) => {
   try {
     const { email, password } = body;
     console.log(body);
-    
+
     // Find user by email
     const user = await prisma.user.findFirst({
       where: { email },

@@ -1,16 +1,16 @@
+import cors from 'cors';
 import express, {
-  json,
-  urlencoded,
   Express,
+  json,
+  NextFunction,
   Request,
   Response,
-  NextFunction,
-  Router,
+  urlencoded,
 } from 'express';
-import cors from 'cors';
 import { PORT } from './config';
 import { SampleRouter } from './routers/sample.router';
 import { AuthRouter } from './routers/auth.router';
+import { EventRouter } from './routers/event.router';
 
 export default class App {
   getApp(): express.Application {
@@ -55,14 +55,14 @@ export default class App {
   }
 
   private routes(): void {
-    const sampleRouter = new SampleRouter();
+    // const sampleRouter = new SampleRouter();
     const authRouter = new AuthRouter();
 
-    this.app.get('/api', (req: Request, res: Response) => {
-      res.send(`Hello, Purwadhika Student API!`);
-    });
+    const eventRouter = new EventRouter();
 
-    this.app.use('/api/samples', sampleRouter.getRouter());
+    // this.app.use('/api/samples', sampleRouter.getRouter());
+    this.app.use('/api/auth', authRouter.getRouter());
+    this.app.use('/api/events', eventRouter.getRouter());
     this.app.use('/api/auth', authRouter.getRouter());
   }
 

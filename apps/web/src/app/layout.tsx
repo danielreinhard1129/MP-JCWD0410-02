@@ -9,7 +9,8 @@ import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Event-Ally | event community",
-  description: "Event-Ally is a platform for event organizers to create and manage events.",
+  description:
+    "Event-Ally is a platform for event organizers to create and manage events.",
 };
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${mochiyPopOne.variable}`}>
-        <div className="flex flex-col selection:bg-[#d80072] selection:font-bold selection:text-white">
+        <div className="flex min-h-screen flex-col selection:bg-[#d80072] selection:font-bold selection:text-white">
           <NextAuthProvider>
             <SessionProvider>
               <ReactQueryProvider>
