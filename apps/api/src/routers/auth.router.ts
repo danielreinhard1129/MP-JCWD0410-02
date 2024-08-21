@@ -1,5 +1,5 @@
 import { AuthController } from '@/controllers/auth.controller';
-import { SampleController } from '@/controllers/sample.controller';
+// import { SampleController } from '@/controllers/sample.controller';
 import { Router } from 'express';
 
 export class AuthRouter {
