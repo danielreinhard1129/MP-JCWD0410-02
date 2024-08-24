@@ -1,9 +1,12 @@
+'use client'
+
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from "@/lib/utils";
-import { IconCalendarEvent, IconChartBar, IconDashboard, IconMenu2, IconReceipt2, IconUsers, IconX } from '@tabler/icons-react';
+import { IconCalendarEvent, IconChartBar, IconDashboard, IconMenu2, IconReceipt2, IconUsers, IconX, IconLogout } from '@tabler/icons-react';
 import { motion, AnimatePresence } from "framer-motion";
+
 
 const sidebarLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: IconDashboard },
@@ -11,11 +14,24 @@ const sidebarLinks = [
   { href: '/dashboard?tab=transactions', label: 'Transactions', icon: IconReceipt2 },
   { href: '/dashboard?tab=statistics', label: 'Statistics', icon: IconChartBar },
   { href: '/dashboard?tab=attendees', label: 'Attendees', icon: IconUsers },
+  { href: 'dashboard?tab=profilepage', label: 'ProfilePage',
+    icon: IconUsers },
+  { href: 'dashboard?tab=reset-password', label: 'Reset-Password', icon: IconUsers },
 ];
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    // Implement your logout logic here
+    // For example:
+    // await auth.signOut();
+    console.log("Logging out...");
+    // Redirect to login page or home page after logout
+    router.push('/login');
+  };
 
   return (
     <div className="md:hidden">
@@ -25,7 +41,6 @@ const MobileMenu = () => {
       >
         {isOpen ? <IconX /> : <IconMenu2 />}
       </button>
-
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -50,6 +65,17 @@ const MobileMenu = () => {
                 <span>{link.label}</span>
               </Link>
             ))}
+            {/* Logout button */}
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                handleLogout();
+              }}
+              className="flex items-center space-x-2 px-4 py-3 w-full text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              <IconLogout className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

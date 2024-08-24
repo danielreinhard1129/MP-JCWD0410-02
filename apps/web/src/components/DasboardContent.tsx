@@ -9,6 +9,8 @@ import TransactionManagement from '@/features/dashboard/TransactionManagement';
 import Statistics from '@/features/dashboard/Statistic';
 import AttendeeList from '@/features/dashboard/AttendeeList';
 import ProtectedRoute from './ProtectedRoute';
+import ProfilePage from '@/features/dashboard/ProfilePage';
+import ResetPasswordPage from '@/features/dashboard/Reset-password';
 
 export const DashboardContent = () => {
   const searchParams = useSearchParams();
@@ -24,6 +26,11 @@ export const DashboardContent = () => {
         return <Statistics />;
       case 'attendees':
         return <AttendeeList />;
+        case 'profilepage':
+          return <ProfilePage />;
+          case 'reset-password':
+          return <ResetPasswordPage />;
+
       default:
         return <Dashboard />;
     }

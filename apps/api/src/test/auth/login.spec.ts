@@ -34,7 +34,7 @@ const user: User = {
   image: null,
   token: null,
   role: ROLE.CUSTOMER,
-  referralCode: null,
+  referralCode: 'string',
   points: 0,
   createdAt: new Date(),
   updatedAt: new Date(),

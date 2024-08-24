@@ -7,9 +7,14 @@ export const RegisterSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
     .required("Password is required")
-    .minLowercase(1)
-    .minNumbers(1)
-    .minUppercase(1)
-    .minSymbols(1)
-    .min(6),
+    .minLowercase(1, "Password must contain at least 1 lowercase letter")
+    .minNumbers(1, "Password must contain at least 1 number")
+    .minUppercase(1, "Password must contain at least 1 uppercase letter")
+    .minSymbols(1, "Password must contain at least 1 symbol")
+    .min(6, "Password must be at least 6 characters long"),
+  role: Yup.string()
+    .oneOf(["buyer", "event_organizer"], "Invalid role")
+    .required("Role is required"),
+  referralCode: Yup.string()
+    .optional()
 });

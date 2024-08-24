@@ -1,5 +1,6 @@
 "use client";
 
+import LandingPage from "@/features/landingpage";
 import useAxios from "@/hooks/useAxios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -25,9 +26,22 @@ const useLogin = () => {
     onSuccess: async (data) => {
       console.log("dataaaa", data.role);
 
+      console.log("dataaaa", data.role);
+
       await signIn("credentials", { ...data, redirect: false });
       alert("Login success");
-      router.push("/");
+
+      if(data.role === 'BUYER') {
+      router.push("/landingpage");
+      } else {
+        router.push("/dashboard")
+      }
+
+      // if(data.role === "BUYER") {
+      //   router.push("/landingpage");
+      // }
+      
+      
     },
     onError: (error: AxiosError<any>) => {
       toast.error(error.response?.data);

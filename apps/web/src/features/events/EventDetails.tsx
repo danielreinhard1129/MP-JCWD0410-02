@@ -71,7 +71,7 @@ const EventsDetailsPage: FC<EventDetailPageProps> = ({ eventId }) => {
               </span>
               <div className="flex flex-col">
                 <p>Tanggal</p>
-                <span>29 Jun 2024 - 01 Sep 2024</span>
+                <span>25 August 2024 - 30 August 2024</span>
               </div>
             </div>
             <div className="flex gap-x-3">

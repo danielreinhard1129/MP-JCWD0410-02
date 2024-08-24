@@ -5,8 +5,10 @@ import { Label } from "@/components/ui/label";
 import { ShootingStars } from "@/components/ui/shootingStars";
 import { StarsBackground } from "@/components/ui/starsBackground";
 import useRegister from "@/hooks/api/auth/useRegister";
+import useRegister from "@/hooks/api/auth/useRegister";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useFormik } from "formik";
+import { useSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,19 +22,33 @@ const RegisterPage = () => {
   const { status } = useSession();
   const registerMutation = useRegister();
 
+  const { status } = useSession();
+  const registerMutation = useRegister();
+
 
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
+      role: "",
+      referralCode: ""
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values) => {
      await registerMutation.mutateAsync(values)
+     await registerMutation.mutateAsync(values)
     },
   });
 
+  // const handleSocialLogin = async (provider: string) => {
+  //   try {
+  //     await signIn(provider, { callbackUrl: "/dashboard" });
+  //   } catch (error) {
+  //     setError(`Failed to login with ${provider}`);
+  //     console.error(`${provider} login error:`, error);
+  //   }
+  // };
   // const handleSocialLogin = async (provider: string) => {
   //   try {
   //     await signIn(provider, { callbackUrl: "/dashboard" });
@@ -131,6 +147,48 @@ const RegisterPage = () => {
               </p>
             ) : null}
           </LabelInputContainer>
+
+          <div className="mb-4">
+            <LabelInputContainer>
+              <Label htmlFor="role" className="ml-1">
+                Role
+              </Label>
+              <select
+                name="role"
+                value={formik.values.role}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="rounded-md bg-slate-900 px-4 py-2 text-neutral-300 shadow-input dark:bg-slate-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+              >
+                <option value="">Select a role</option>
+                <option value="buyer">Buyer</option>
+                <option value="event_organizer">Event Organizer</option>
+              </select>
+              {!!formik.touched.role && !!formik.errors.role ? (
+                <p className="ml-1 text-sm text-red-400">{formik.errors.role}</p>
+              ) : null}
+            </LabelInputContainer>
+          </div>
+
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="referralCode" className="ml-1">
+              Referral Code (Optional)
+            </Label>
+            <Input
+              name="referralCode"
+              type="text"
+              placeholder="Enter referral code"
+              value={formik.values.referralCode}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {!!formik.touched.referralCode && !!formik.errors.referralCode ? (
+              <p className="ml-1 text-sm text-red-400">
+                {formik.errors.referralCode}
+              </p>
+            ) : null}
+          </LabelInputContainer>
+
 
 
           <button

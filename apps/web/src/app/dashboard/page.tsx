@@ -1,50 +1,35 @@
-"use client";
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from "next/navigation";
 import Dashboard from "@/features/dashboard/Dashboard";
-import Sidebar from '../../components/Sidebar';
-import DashboardContent from '@/components/DasboardContent';
-import MobileMenu from '@/components/Mobilemenu';
+import Sidebar from "../../components/Sidebar";
+import DashboardContent from "@/components/DasboardContent";
+import MobileMenu from "@/components/Mobilemenu";
+import { auth } from "@/lib/auth";
 
-export default function DashboardPage() {
-  // const { data: session, status } = useSession();
-  // const router = useRouter();
+export default async function DashboardPage() {
+  const session = await auth();
 
-  // useEffect(() => {
-  //   console.log('Session status:', status);
-  //   console.log('Session data:', session);
-
-  //   if (status === 'unauthenticated') {
-  //     console.log('Redirecting to login...');
-  //     router.push('/login');
-  //   }
-  // }, [status, session, router]);
-
-  // if (status === 'loading') {
-  //   return <div>Loading...</div>;
-  // }
-
-  //apa saja yg di protect, adjust di middleware
-
-  // if (status === 'authenticated') {
-    return (
-      <div className="flex h-screen">
-        <div className="hidden md:block">
-          <Sidebar />
+  if (session?.user.role !== "EVENT_ORGANIZER") {
+    return redirect("/login");
+  }
+  return (
+    <div className="flex h-screen">
+      <div className="hidden md:block">
+        <Sidebar />
         </div>
-        <div className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-7xl p-4">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold">Event Organizer Dashboard</h1>
-              <MobileMenu />
-            </div>
-            <DashboardContent />
+      <div className="flex-1 overflow-auto">
+        <div className="mx-auto max-w-7xl p-4">
+          <div className="mb-6 flex items-center justify-between">
+            <h1 className="text-3xl font-bold">Event Organizer Dashboard</h1>
+            <MobileMenu />
           </div>
+          <DashboardContent />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   // This will be shown briefly before redirecting if unauthenticated
   // return <div>Access Denied. Redirecting to login...</div>;

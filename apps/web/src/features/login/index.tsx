@@ -17,17 +17,21 @@ import { useRouter } from "next/navigation";
 import { LoginSchema } from "./schemas/LoginSchema";
 import { useSession, signIn } from "next-auth/react";
 import useLogin from "@/hooks/api/auth/useLogin";
-import { result } from "cypress/types/lodash";
 
 const LoginPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [error, setError] = useState("");
   const loginMutation = useLogin();
+  const loginMutation = useLogin();
 
   // useEffect(() => {
   //   if (session) {
-  //     router.replace("/dashboard");
+  //     if (session.user.role === "buyer") {
+  //       router.replace("/homepage");
+  //     } else if (session.user.role === "event organizer") {
+  //       router.replace("/dashboard");
+  //     }
   //   }
   // }, [session, router]);
 
@@ -35,23 +39,22 @@ const LoginPage = () => {
     initialValues: {
       email: "",
       password: "",
+      role: "event organizer", // Default role
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      try {       
+      try {
         await loginMutation.mutateAsync(values);
-        } catch (error) {
-          setError("An error occured during login");
-          console.error("Login error:", error);
-        }
-
-      },
-    });
-
+      } catch (error) {
+        setError("An error occurred during login");
+        console.error("Login error:", error);
+      }
+    },
+  });
 
   const handleSocialLogin = async (provider: string) => {
     try {
-      await signIn(provider, { callbackUrl: "/dashboard" });
+      await signIn(provider, { callbackUrl: "/role-selection" });
     } catch (error) {
       setError(`Failed to login with ${provider}`);
       console.error(`${provider} login error:`, error);
@@ -63,7 +66,6 @@ const LoginPage = () => {
   if (status === "loading") {
     return <p>Loading...</p>;
   }
-
 
   return (
     <main className="relative z-10 flex h-screen items-center justify-center overflow-hidden">
@@ -130,6 +132,22 @@ const LoginPage = () => {
                 {formik.errors.password}
               </p>
             ) : null}
+          </LabelInputContainer>
+
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="role" className="ml-1">
+              Role
+            </Label>
+            <select
+              name="role"
+              value={formik.values.role}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="w-full rounded-md bg-transparent px-3 py-2 text-sm shadow-sm"
+            >
+              <option value="buyer">Buyer</option>
+              <option value="event organizer">Event Organizer</option>
+            </select>
           </LabelInputContainer>
 
           {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
@@ -204,8 +222,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-
-//middleware di adjust > protected route
-//di useLogin > router.push nya dibuat sesuai role nya (EO / client)
-// register tambah fitur referal
