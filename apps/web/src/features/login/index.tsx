@@ -16,37 +16,34 @@ import Logo from "/public/event-ally.svg";
 import { useRouter } from "next/navigation";
 import { LoginSchema } from "./schemas/LoginSchema";
 import { useSession, signIn } from "next-auth/react";
+import useLogin from "@/hooks/api/auth/useLogin";
 
 const LoginPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [error, setError] = useState("");
+  const loginMutation = useLogin();
 
-  useEffect(() => {
-    if (session) {
-      router.replace("/dashboard");
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session) {
+  //     if (session.user.role === "buyer") {
+  //       router.replace("/homepage");
+  //     } else if (session.user.role === "event organizer") {
+  //       router.replace("/dashboard");
+  //     }
+  //   }
+  // }, [session, router]);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      role: "event organizer", // Default role
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
       try {
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-        });
-
-        if (result?.error) {
-          setError(result.error);
-        } else {
-          router.push("/dashboard");
-        }
+        await loginMutation.mutateAsync(values);
       } catch (error) {
         setError("An error occurred during login");
         console.error("Login error:", error);
@@ -56,7 +53,7 @@ const LoginPage = () => {
 
   const handleSocialLogin = async (provider: string) => {
     try {
-      await signIn(provider, { callbackUrl: "/dashboard" });
+      await signIn(provider, { callbackUrl: "/role-selection" });
     } catch (error) {
       setError(`Failed to login with ${provider}`);
       console.error(`${provider} login error:`, error);
@@ -67,10 +64,6 @@ const LoginPage = () => {
 
   if (status === "loading") {
     return <p>Loading...</p>;
-  }
-
-  if (session) {
-    return null;
   }
 
   return (
@@ -138,6 +131,22 @@ const LoginPage = () => {
                 {formik.errors.password}
               </p>
             ) : null}
+          </LabelInputContainer>
+
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="role" className="ml-1">
+              Role
+            </Label>
+            <select
+              name="role"
+              value={formik.values.role}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="w-full rounded-md bg-transparent px-3 py-2 text-sm shadow-sm"
+            >
+              <option value="buyer">Buyer</option>
+              <option value="event organizer">Event Organizer</option>
+            </select>
           </LabelInputContainer>
 
           {error && <p className="mb-4 text-sm text-red-400">{error}</p>}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import ShimmerButton from "./magicui/shimmerButton";
 import Logo from "/public/event-ally.svg";
 
@@ -56,31 +56,38 @@ const Navbar = () => {
             />
           </Link>
           <div
-            className={`mx-auto mt-20 flex-col justify-center gap-y-9 text-center text-lg font-bold text-slate-900 lg:mt-28 lg:bg-none dark:text-white/75 ${isOpen ? "flex" : "hidden"} ${isAnimating ? "animate-fade" : ""} lg:flex`}
+            className={`mx-auto mt-20 flex-col justify-center gap-y-9 text-center text-lg font-bold text-slate-900 dark:text-white/75 lg:mt-28 lg:bg-none ${isOpen ? "flex" : "hidden"} ${isAnimating ? "animate-fade" : ""} lg:flex`}
           >
             <div
               className={`flex flex-col font-bold text-white lg:-mt-36 lg:ml-16 lg:flex-row lg:justify-center lg:px-4 ${pathname === "/" ? "hidden" : ""}`}
             >
               <Link
                 href="/events"
-                className="mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:underline-animation-nav lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
+                className="lg:underline-animation-nav mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
               >
                 Events
               </Link>
 
-              
               <Link
                 href="/about"
-                className="mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:underline-animation-nav lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
+                className="lg:underline-animation-nav mr-10 mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
               >
                 About
               </Link>
               <Link
                 href="/faq"
-                className="mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:underline-animation-nav lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
+                className="lg:underline-animation-nav mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider lg:mt-0 lg:inline-block lg:py-3 lg:text-lg"
               >
                 FAQ
               </Link>
+              <div
+                onClick={async () => await signOut()}
+                className="lg:underline-animation-nav mt-4 w-full min-w-32 rounded-md border-t-4 border-pink-500 py-7 text-xl tracking-wider transition-colors duration-300 hover:bg-pink-600 lg:mt-0 lg:inline-flex lg:items-center lg:justify-center lg:py-3 lg:text-lg"
+              >
+                {session.data?.user.id ? "logout" : "sudah logout"}
+
+                {/* SIGNOUT */}
+              </div>
             </div>
           </div>
           <ShimmerButton

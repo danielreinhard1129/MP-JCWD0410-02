@@ -9,13 +9,17 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import { PORT } from './config';
-import { SampleRouter } from './routers/sample.router';
+// import { SampleRouter } from './routers/sample.router';
 import { AuthRouter } from './routers/auth.router';
+import { ProfileRouter } from './routers/profile.router';
+import { TransactionManagementRouter } from './routers/transaction-management.router';
+
+
 
 export default class App {
-  getApp(): express.Application {
-    throw new Error('Method not implemented.');
-  }
+  // getApp(): express.Application {
+  //   throw new Error('Method not implemented.');
+  
   private app: Express;
 
   constructor() {
@@ -23,6 +27,10 @@ export default class App {
     this.configure();
     this.routes();
     this.handleError();
+  }
+
+  public getApp(): Express {
+    return this.app;
   }
 
   private configure(): void {
@@ -46,7 +54,7 @@ export default class App {
       (err: Error, req: Request, res: Response, next: NextFunction) => {
         if (req.path.includes('/api/')) {
           console.error('Error : ', err.stack);
-          res.status(500).send('Error !');
+          res.status(500).send(err.message);
         } else {
           next();
         }
@@ -55,15 +63,19 @@ export default class App {
   }
 
   private routes(): void {
-    const sampleRouter = new SampleRouter();
+    // const sampleRouter = new SampleRouter();
     const authRouter = new AuthRouter();
+    const profileRouter = new ProfileRouter();
+    const transactionManagementRouter = new TransactionManagementRouter();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
 
-    this.app.use('/api/samples', sampleRouter.getRouter());
+    // this.app.use('/api/samples', sampleRouter.getRouter());
     this.app.use('/api/auth', authRouter.getRouter());
+    this.app.use('/api/profile', profileRouter.getRouter());
+    this.app.use('/api/transactions', transactionManagementRouter.getRouter());
   }
 
   public start(): void {
@@ -71,4 +83,5 @@ export default class App {
       console.log(`  ➜  [API] Local:   http://localhost:${PORT}/`);
     });
   }
+
 }

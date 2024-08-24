@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 interface Payload extends User {
-  role: boolean;
+  role: string;
   token: string;
 }
 
