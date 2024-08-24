@@ -26,6 +26,8 @@ const useLogin = () => {
     onSuccess: async (data) => {
       console.log("dataaaa", data.role);
 
+      console.log("dataaaa", data.role);
+
       await signIn("credentials", { ...data, redirect: false });
       alert("Login success");
 

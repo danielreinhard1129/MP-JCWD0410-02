@@ -30,3 +30,7 @@ export default async function DashboardPage() {
     </div>
   );
 }
+
+  // This will be shown briefly before redirecting if unauthenticated
+  // return <div>Access Denied. Redirecting to login...</div>;
+// }

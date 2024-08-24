@@ -5,8 +5,10 @@ import { Label } from "@/components/ui/label";
 import { ShootingStars } from "@/components/ui/shootingStars";
 import { StarsBackground } from "@/components/ui/starsBackground";
 import useRegister from "@/hooks/api/auth/useRegister";
+import useRegister from "@/hooks/api/auth/useRegister";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useFormik } from "formik";
+import { useSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +19,9 @@ import Background from "/public/astronaut-background.svg";
 import Logo from "/public/event-ally.svg";
 
 const RegisterPage = () => {
+  const { status } = useSession();
+  const registerMutation = useRegister();
+
   const { status } = useSession();
   const registerMutation = useRegister();
 
@@ -32,9 +37,18 @@ const RegisterPage = () => {
     validationSchema: RegisterSchema,
     onSubmit: async (values) => {
      await registerMutation.mutateAsync(values)
+     await registerMutation.mutateAsync(values)
     },
   });
 
+  // const handleSocialLogin = async (provider: string) => {
+  //   try {
+  //     await signIn(provider, { callbackUrl: "/dashboard" });
+  //   } catch (error) {
+  //     setError(`Failed to login with ${provider}`);
+  //     console.error(`${provider} login error:`, error);
+  //   }
+  // };
   // const handleSocialLogin = async (provider: string) => {
   //   try {
   //     await signIn(provider, { callbackUrl: "/dashboard" });

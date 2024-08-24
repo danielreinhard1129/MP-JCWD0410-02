@@ -1,13 +1,12 @@
+import cors from 'cors';
 import express, {
-  json,
-  urlencoded,
   Express,
+  json,
+  NextFunction,
   Request,
   Response,
-  NextFunction,
-  Router,
+  urlencoded,
 } from 'express';
-import cors from 'cors';
 import { PORT } from './config';
 // import { SampleRouter } from './routers/sample.router';
 import { AuthRouter } from './routers/auth.router';
@@ -68,11 +67,10 @@ export default class App {
     const profileRouter = new ProfileRouter();
     const transactionManagementRouter = new TransactionManagementRouter();
 
-    this.app.get('/api', (req: Request, res: Response) => {
-      res.send(`Hello, Purwadhika Student API!`);
-    });
+    const eventRouter = new EventRouter();
 
-    // this.app.use('/api/samples', sampleRouter.getRouter());
+    // // this.app.use('/api/samples', sampleRouter.getRouter());
+    this.app.use('/api/events', eventRouter.getRouter());
     this.app.use('/api/auth', authRouter.getRouter());
     this.app.use('/api/profile', profileRouter.getRouter());
     this.app.use('/api/transactions', transactionManagementRouter.getRouter());

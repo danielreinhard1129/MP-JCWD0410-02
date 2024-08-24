@@ -12,7 +12,10 @@ const Footer = () => {
   const pathname = usePathname();
 
   const isAuthPage =
-    pathname === "/login" || pathname === "/register" || pathname === "/";
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/" ||
+    pathname === "/dashboard";
 
   if (isAuthPage) {
     return null;

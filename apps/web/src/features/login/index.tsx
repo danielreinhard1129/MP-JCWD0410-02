@@ -23,6 +23,7 @@ const LoginPage = () => {
   const { data: session, status } = useSession();
   const [error, setError] = useState("");
   const loginMutation = useLogin();
+  const loginMutation = useLogin();
 
   // useEffect(() => {
   //   if (session) {

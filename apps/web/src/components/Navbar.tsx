@@ -15,7 +15,10 @@ const Navbar = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const session = useSession();
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/dashboard";
 
   if (isAuthPage) {
     return null;
